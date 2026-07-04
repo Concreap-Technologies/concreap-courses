@@ -1,0 +1,21 @@
+[project]
+name = "learner-support"
+version = "0.1.0"
+description = "Learner support triage project built with LangGraph"
+readme = "README.md"
+authors = [
+    { name = "Oluwatobi", email = "agbeleyeoluwatobi@gmail.com" }
+]
+requires-python = ">=3.13"
+dependencies = [
+    "langchain>=1.3.2",
+    "langchain-anthropic>=1.4.3",
+    "langchain-google-genai>=4.2.6",
+    "langchain-openai>=1.2.2",
+    "langgraph>=1.2.2",
+    "playwright>=1.60.0",
+    "pydantic>=2.13.4",
+    "python-dotenv>=1.2.2",
+    "python-telegram-bot>=22.8",
+    "requests>=2.34.2",
+]
