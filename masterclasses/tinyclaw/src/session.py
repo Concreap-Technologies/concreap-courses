@@ -1,0 +1,42 @@
+import json
+import os
+import time
+
+class SessionManager:
+    def __init__(self, path="TINY_SESSION.json"):
+        self.path = path
+
+        #load existing sessions from disk if available
+        if os.path.exists(path):
+            with open(path) as f:
+                self.sessions = json.load(f)
+            print(f" Restored previous sessions(s) from disk!")
+        else:
+            self.sessions = {}
+
+    def find_or_create(self, client_id, channel):
+        session_id = f"{channel}:{client_id}"
+
+        if session_id not in self.sessions:
+            self.sessions[session_id] = {
+                "client_id": client_id,
+                "channel": channel,
+                "created_at": time.time(),
+                "history": []
+            }
+        
+        return session_id
+    
+    def add_message(self, session_id, message):
+        session = self.sessions.get(session_id)
+        if session:
+            session["history"].append(message)
+            self._save()
+    
+    def get_history(self, session_id):
+        session = self.sessions.get(session_id)
+        return session["history"] if session else []
+    
+    def _save(self):
+        with open(self.path, "w") as f:
+            json.dump(self.sessions, f, indent=2, default=str)
